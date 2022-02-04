@@ -1,38 +1,4 @@
-{{-- <?php
-$dbcon=mysqli_connect('localhost','root','','99estate');
-If(isset($_POST['submit'])){
 
-    $name = $_POST['form_name'];
-    $email = $_POST['form_email'];
-    $password = $_POST['form_password'];
-    $cp = $_POST['form_cp'];
-    $phone = $_POST['form_phone'];
-    $address = $_POST['form_message'];
-
-    $sql="INSERT INTO registereduser(Fullname,Emailid,Password1,Contactno,Address1)
-    values('$name','$email','$password','$phone','$address')";
-
-
-
-$qry=$dbcon->query($sql);
-
-    if($qry){
-        echo "<SCRIPT>
-                alert('Successfully save')
-                // window.location.replace('connection.php');
-                 window.location.replace('/buysalerent');
-            </SCRIPT>";
-        }else{
-            echo "not inserted";
-        }
-
-
-
-}
-
-
-
-?> --}}
 
 @include('FrontEnd.header')
 <!-- banner -->
@@ -49,20 +15,38 @@ $qry=$dbcon->query($sql);
 <div class="spacer">
 <div class="row register">
   <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
-<form action="/create" method="post">
+<form action="{{route('create')}}" method="post">
+@if (Session::has('success'))
+<div class="alert alert-success">{{Session::get('success')}}</div>
+@endif
 
-    <input type="text" class="form-control" placeholder="Full Name" name="form_name">
-    <input type="text" class="form-control" placeholder="Enter Email" name="form_email">
+@if (Session::has('fail'))
+<div class="alert alert-danger">{{Session::get('fail')}}</div>
+@endif
+
+    <input type="text" class="form-control" placeholder="Full Name" name="form_name" value="{{old('form_name')}}">
+    <span class="text-danger">@error('form_name'){{$message}}
+
+    @enderror</span>
+    <input type="text" class="form-control" placeholder="Enter Email" name="form_email" value="{{old('form_email')}}">
+    <span class="text-danger">@error('form_email'){{$message}}
+
+        @enderror</span>
     <input type="password" class="form-control" placeholder="Password" name="form_pass">
-    <input type="password" class="form-control" placeholder="Confirm Password" name="cp">
+    <span class="text-danger">@error('form_pass'){{$message}}
+
+        @enderror</span>
 
     <input type="text" class="form-control" placeholder="Contact Number" name="form_phone">
+    <span class="text-danger">@error('form_phone'){{$message}}
 
-    <textarea rows="6" class="form-control" placeholder="Address" name="form_message"></textarea>
+        @enderror</span>
+
+
     <input type="hidden" name="_token" value="<?=csrf_token()?>" >
 <button type="submit" class="btn btn-success" name="Submit">Register</button>
 
-
+<a href="login" ><span class="btn btn-info"  >Already Registered User, Login!</span></a>
 
 
 </div>

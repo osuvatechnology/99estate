@@ -125,7 +125,7 @@
         </div>
         <div class="col-lg-5 col-lg-offset-1 col-sm-6 ">
           <p>Join now and get updated with all the properties deals.</p>
-          <button class="btn btn-info"   data-toggle="modal" data-target="#loginpop">Login</button>        </div>
+          <a href="login" ><span class="btn btn-info"  >Login Now!</span>  </a>     </div>
       </div>
     </div>
   </div>

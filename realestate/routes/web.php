@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
 
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,6 +62,9 @@ Route::get('/register', function () {
     return view('FrontEnd.register');
 });
 
+Route::get('/dashboard', function () {
+    return view('FrontEnd.dashboard');
+});
 
 
 Route::get('/',[App\Http\Controllers\EstateController::class, 'index']);
@@ -78,15 +81,24 @@ Route::get('/',[App\Http\Controllers\EstateController::class, 'index']);
 //     return "Hi, your name is".$name1."".$emailid."".$pass."".$cp."".$phone."".$mes;
 // });
 
-Route::post('/create', function () {
-      $sale = new Article();
-      $sale->name=request('form_name');
-      $sale->emailid=request('form_email');
-      $sale->password1=request('form_pass');
-      $sale->confirmpasswd=request('cp');
-      $sale->contactno=request('form_phone');
-      $sale->message=request('form_message');
-      $sale->save();
+// Route::post('/create', function () {
+//       $sale = new Article();
+//       $sale->name=request('form_name');
+//       $sale->emailid=request('form_email');
+//       $sale->password1=request('form_pass');
+//       $sale->confirmpasswd=request('cp');
+//       $sale->contactno=request('form_phone');
+//       $sale->message=request('form_message');
+//       $sale->save();
 
-      return redirect('/buysalerent');
-});
+//       return redirect('/buysalerent');
+// });
+
+Route::get('/login',[App\Http\Controllers\AuthController::class, 'login'])->middleware('alreadyLoggedIn');
+Route::get('/register',[App\Http\Controllers\AuthController::class, 'register'])->middleware('alreadyLoggedIn');
+
+Route::post('/create',[App\Http\Controllers\AuthController::class, 'create'])->name('create');
+Route::post('/login-user',[App\Http\Controllers\AuthController::class, 'loginUser'])->name('login-user');
+Route::get('/dashboard',[App\Http\Controllers\AuthController::class, 'dashboard'])->middleware('isLoggedIn');
+
+Route::get('/logout',[App\Http\Controllers\AuthController::class, 'logout']);
