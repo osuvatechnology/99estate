@@ -18,9 +18,9 @@ class CreateArticlesTable extends Migration
             $table->string('name');
             $table->string('emailid');
             $table->string('password1');
-            $table->string('confirmpasswd');
+           
             $table->string('contactno');
-            $table->string('message');
+            
             $table->timestamps();
         });
     }
